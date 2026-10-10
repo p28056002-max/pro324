@@ -1,0 +1,15 @@
+name: Keep Render Server Alive
+
+on:
+  schedule:
+    # Runs every 14 minutes to stay under Render's 15-minute sleep threshold
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render App
+        run: |
+          curl -sSf https://pro324.onrender.com/health || true
